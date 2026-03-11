@@ -1,9 +1,8 @@
 import os
-import json
-from flask import Flask, jsonify, render_template_string
+from flask import Flask, jsonify, render_template
 import oracledb
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="templates")
 
 # ─────────────────────────────────────────────
 # Credenciais via variáveis de ambiente (Vercel)
@@ -74,9 +73,7 @@ END;
 @app.route("/")
 def index():
     """Página principal – retorna o HTML da interface."""
-    with open(os.path.join(os.path.dirname(__file__), "../templates/index.html"), "r", encoding="utf-8") as f:
-        html = f.read()
-    return html
+    return render_template("index.html")
 
 
 @app.route("/herois", methods=["GET"])
